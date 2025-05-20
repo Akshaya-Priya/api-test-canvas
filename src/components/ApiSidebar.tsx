@@ -10,9 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarTrigger
+  SidebarTrigger,
+  useSidebar
 } from '@/components/ui/sidebar';
-import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 
 // Group endpoints by category
@@ -28,13 +28,17 @@ const groupEndpointsByCategory = (endpoints: ApiEndpoint[]): Record<string, ApiE
 
 export const ApiSidebar: React.FC = () => {
   const { endpoints, selectedEndpoint, setSelectedEndpoint } = useApi();
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
   
   const groupedEndpoints = groupEndpointsByCategory(endpoints);
 
   return (
-    <Sidebar className={cn("transition-all duration-300 border-r border-border", 
-      collapsed ? "w-16" : "w-72")} collapsible>
+    <Sidebar 
+      className={cn("transition-all duration-300 border-r border-border", 
+        collapsed ? "w-16" : "w-72")} 
+      collapsible="icon"
+    >
       <div className="p-4 flex items-center justify-between border-b border-border">
         <h2 className={cn("font-bold text-lg text-primary", collapsed ? "hidden" : "block")}>
           API Explorer
@@ -44,9 +48,7 @@ export const ApiSidebar: React.FC = () => {
       
       <SidebarContent className="py-2">
         {Object.entries(groupedEndpoints).map(([category, categoryEndpoints]) => (
-          <SidebarGroup key={category} defaultOpen={
-            categoryEndpoints.some(endpoint => endpoint.id === selectedEndpoint?.id)
-          }>
+          <SidebarGroup key={category}>
             <SidebarGroupLabel 
               className={cn("text-sm font-semibold", collapsed ? "justify-center" : "")}
             >
