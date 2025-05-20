@@ -15,11 +15,11 @@ export const ApiDashboard: React.FC = () => {
           <ApiSidebar />
           <div className="flex-1 flex flex-col overflow-hidden">
             <TestCasesBar />
-            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-              <div className="md:w-1/2 h-1/2 md:h-full overflow-hidden border-r border-border">
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <div className="h-1/2 overflow-hidden border-b border-border">
                 <RequestPanel />
               </div>
-              <div className="md:w-1/2 h-1/2 md:h-full overflow-hidden">
+              <div className="h-1/2 overflow-hidden">
                 <ResponsePanel />
               </div>
             </div>
